@@ -114,6 +114,12 @@ app.post('/q/save', (req, res) => {
   }
 });
 
+// ─── GET /q/health ───────────────────────────────────────────────────────────
+app.get('/q/health', (req, res) => {
+  const archivos = fs.readdirSync(QUOTES_DIR).length;
+  res.json({ ok: true, cotizaciones: archivos, version: '1.0.0' });
+});
+
 // ─── GET /q/:archivo ─────────────────────────────────────────────────────────
 app.get('/q/:archivo', (req, res) => {
   try {
@@ -144,12 +150,6 @@ app.get('/q/:archivo', (req, res) => {
     console.error('[get] Error:', err.message);
     return res.status(500).send('Error interno');
   }
-});
-
-// ─── GET /q/health ───────────────────────────────────────────────────────────
-app.get('/q/health', (req, res) => {
-  const archivos = fs.readdirSync(QUOTES_DIR).length;
-  res.json({ ok: true, cotizaciones: archivos, version: '1.0.0' });
 });
 
 // ─── Páginas de error ─────────────────────────────────────────────────────────
